@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLAMINGO arc. — NEEZY For The Ladies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --ink:        #1c1013;
+  --bg:         #fffaf9;
+  --blush:      #f4dde1;
+  --flamingo:   #e8899d;
+  --flamingo-deep: #cf6b82;
+  --dim:        #8a7176;
+  --line:       rgba(28,16,19,.12);
+
+  --dark-ink:   #0a0a0a;
+  --dark-panel: #141414;
+  --dark-paper: #f2f0ec;
+  --dark-line:  rgba(242,240,236,.14);
+  --accent:     #c8402c;
+
+  --font-display: 'Archivo Black', 'Arial Black', sans-serif;
+  --font-mono:    'Space Mono', monospace;
+  --container: 1280px;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; }
+
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-mono);
+  font-size:14px;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+img{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+button{ font-family:inherit; cursor:pointer; background:none; border:none; color:inherit; }
+h1,h2,h3{ font-family:var(--font-display); text-transform:uppercase; line-height:1; }
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-family:var(--font-mono);
+  font-weight:700;
+  font-size:12px;
+  letter-spacing:1.5px;
+  padding:14px 26px;
+  text-transform:uppercase;
+  background:var(--ink);
+  color:var(--bg);
+  border-radius:40px;
+  transition:background .2s ease, color .2s ease, transform .15s ease;
+}
+.btn:hover{ background:var(--flamingo-deep); color:var(--ink); transform:translateY(-2px); }
+.btn--pill{
+  background:var(--flamingo);
+  color:var(--ink);
+}
+.btn--pill:hover{ background:var(--ink); color:var(--flamingo); }
+.btn__arrow{
+  width:26px; height:26px;
+  border-radius:50%;
+  background:var(--bg);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+  transition:transform .25s ease;
+}
+.btn__arrow.rotated{ transform:rotate(90deg); }
+
+/* ============ Announce ============ */
+.announce{
+  background:var(--flamingo);
+  text-align:center;
+  padding:9px 20px;
+  font-size:11px;
+  letter-spacing:2px;
+  color:var(--ink);
+  font-weight:700;
+}
+
+/* ============ Nav ============ */
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:22px clamp(20px,4vw,56px);
+  border-bottom:1px solid var(--line);
+  position:relative;
+}
+.nav__links{
+  display:flex;
+  align-items:center;
+  gap:26px;
+  font-size:12px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+.nav__links a{ position:relative; padding-bottom:4px; }
+.nav__links a.active{ color:var(--flamingo-deep); font-weight:700; }
+.nav__links a:hover{ color:var(--flamingo-deep); }
+.nav__links .tag{
+  font-size:9px;
+  background:var(--flamingo-deep);
+  color:var(--bg);
+  padding:2px 6px;
+  border-radius:8px;
+  margin-left:4px;
+}
+
+.nav__logo{ position:absolute; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:8px; }
+.nav__logo img{ height:40px; }
+.nav__logo span{
+  font-family:var(--font-display);
+  font-size:13px;
+  color:var(--flamingo-deep);
+  letter-spacing:1px;
+}
+
+.nav__icons{ display:flex; align-items:center; gap:18px; }
+.nav__icons button{ display:flex; }
+.nav__burger{ display:none; flex-direction:column; gap:5px; width:24px; }
+.nav__burger span{ height:2px; background:var(--ink); width:100%; }
+
+/* ============ Hero ============ */
+.hero{
+  position:relative;
+  padding:70px 24px 40px;
+  text-align:center;
+  overflow:hidden;
+}
+.hero__kicker{
+  display:inline-block;
+  font-size:11px;
+  letter-spacing:2px;
+  font-weight:700;
+  color:var(--flamingo-deep);
+  border:1px solid var(--flamingo-deep);
+  border-radius:20px;
+  padding:6px 16px;
+  margin-bottom:36px;
+}
+.hero__bg-text{
+  font-size:clamp(60px,14vw,130px);
+  color:var(--ink);
+  white-space:nowrap;
+  letter-spacing:2px;
+  user-select:none;
+}
+.hero__img{
+  width:min(420px,72vw);
+  margin:-9vw auto 0;
+  position:relative;
+  z-index:2;
+}
+.hero__img img{ width:100%; filter:drop-shadow(0 30px 40px rgba(28,16,19,.18)); }
+.hero__foot{
+  max-width:520px;
+  margin:20px auto 0;
+  color:var(--dim);
+  font-size:13px;
+}
+.hero__cta{ margin-top:26px; }
+
+/* ============ About split ============ */
+.about{
+  display:grid;
+  grid-template-columns:1fr 1.6fr;
+  gap:40px;
+  max-width:var(--container);
+  margin:0 auto;
+  padding:90px 24px;
+  align-items:start;
+}
+.about__label p:first-child{ color:var(--dim); font-size:12px; margin-bottom:6px; }
+.about__label p:last-child{ font-weight:700; font-size:15px; }
+.about__statement{ font-size:clamp(18px,2.4vw,26px); line-height:1.5; font-weight:700; }
+.about__cta{ margin-top:26px; }
+
+/* ============ Arrivals band ============ */
+.arrivals{
+  background:var(--flamingo);
+  padding:70px clamp(20px,4vw,56px) 90px;
+  position:relative;
+}
+.arrivals__head{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:24px;
+  margin-bottom:56px;
+  flex-wrap:wrap;
+}
+.arrivals__head span{
+  font-size:12px;
+  letter-spacing:2px;
+  color:rgba(28,16,19,.5);
+  text-transform:uppercase;
+}
+.arrivals__head h2{
+  font-size:clamp(28px,4vw,44px);
+  color:var(--bg);
+}
+.arrivals__grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:30px;
+  max-width:1100px;
+  margin:0 auto;
+}
+.piece{ text-align:center; }
+.piece__img{
+  position:relative;
+  background:rgba(255,250,249,.35);
+  border-radius:40px 40px 20px 20px;
+  padding:30px 20px 0;
+  overflow:hidden;
+}
+.piece__img img{ width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:20px 20px 0 0; }
+.piece__badge{
+  position:absolute;
+  top:16px; left:16px;
+  background:var(--bg);
+  color:var(--ink);
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:1px;
+  padding:6px 12px;
+  border-radius:20px;
+  display:flex; align-items:center; gap:5px;
+}
+.piece__info{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:16px;
+  text-align:left;
+}
+.piece__info h3{ font-size:14px; margin-bottom:2px; }
+.piece__info p{ font-size:12px; color:rgba(28,16,19,.55); }
+.piece .btn{ padding:10px 18px; font-size:10px; }
+
+/* ============ Manifesto / collage ============ */
+.passion{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:110px 24px 60px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:50px;
+  align-items:center;
+}
+.passion__text p{ color:var(--dim); font-size:14px; margin-bottom:18px; max-width:420px; }
+.passion__cta{ margin-top:10px; }
+.passion__collage{
+  position:relative;
+  min-height:420px;
+}
+.passion__collage img{
+  position:absolute;
+  border-radius:20px;
+  object-fit:cover;
+  box-shadow:0 20px 40px rgba(28,16,19,.15);
+}
+.passion__collage .c1{ width:52%; top:0; left:0; aspect-ratio:4/5; }
+.passion__collage .c2{ width:46%; top:6%; right:0; aspect-ratio:5/4; }
+.passion__collage .c3{ width:30%; bottom:0; right:8%; aspect-ratio:1/1; }
+
+.wordmark{
+  text-align:center;
+  padding:20px 24px 110px;
+}
+.wordmark h2{
+  font-size:clamp(70px,16vw,220px);
+  color:var(--flamingo-deep);
+  letter-spacing:2px;
+}
+
+/* ============ Collections teaser ============ */
+.collections{ padding:0 clamp(20px,4vw,56px) 110px; }
+.collections__head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  margin-bottom:40px;
+  flex-wrap:wrap;
+  gap:14px;
+}
+.collections__head h2{ font-size:clamp(26px,3.6vw,38px); }
+.collections__grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+.collections__grid img{
+  width:100%;
+  aspect-ratio:4/5;
+  object-fit:cover;
+  border-radius:24px;
+}
+.collections__grid figcaption{
+  margin-top:14px;
+  font-size:13px;
+  font-weight:700;
+  text-transform:uppercase;
+}
+.collections__item{
+  animation:fadeIn .4s ease both;
+}
+.collections__item.is-extra{ display:none; }
+.collections__grid.is-expanded .collections__item.is-extra{ display:block; }
+@keyframes fadeIn{
+  from{ opacity:0; transform:translateY(10px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+/* ============ Footer (matches main site, dark) ============ */
+.footer{
+  background:var(--dark-ink);
+  color:var(--dark-paper);
+  border-top:1px solid var(--dark-line);
+  padding:70px clamp(20px,4vw,50px) 30px;
+}
+.footer__top{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:50px;
+  max-width:var(--container);
+  margin:0 auto 50px;
+}
+.footer__logo img{ height:40px; opacity:.9; margin-bottom:16px; }
+.footer__blurb{ color:var(--dim); font-size:12px; max-width:260px; }
+.footer__cols{ display:flex; gap:60px; flex-wrap:wrap; }
+.footer__cols h4{ font-size:11px; letter-spacing:1.5px; color:var(--dark-paper); margin-bottom:16px; }
+.footer__cols a{ display:block; font-size:12px; color:#9a9a94; margin-bottom:10px; }
+.footer__cols a:hover{ color:var(--dark-paper); }
+.footer__bottom{
+  text-align:center;
+  font-size:10px;
+  letter-spacing:1.5px;
+  color:#9a9a94;
+  border-top:1px solid var(--dark-line);
+  padding-top:26px;
+}
+
+/* ============ Responsive ============ */
+@media (max-width:900px){
+  .about{ grid-template-columns:1fr; }
+  .arrivals__grid{ grid-template-columns:1fr; max-width:360px; }
+  .passion{ grid-template-columns:1fr; }
+  .passion__collage{ min-height:360px; margin-top:20px; }
+  .collections__grid{ grid-template-columns:1fr 1fr; }
+}
+@media (max-width:640px){
+  .nav__links{
+    position:fixed; top:0; right:0; height:100vh; width:min(78vw,300px);
+    background:var(--bg); flex-direction:column; padding:100px 30px; gap:26px;
+    transform:translateX(100%); transition:transform .3s ease; z-index:200;
+    border-left:1px solid var(--line);
+    align-items:flex-start;
+  }
+  .nav__links.open{ transform:translateX(0); }
+  .nav__burger{ display:flex; }
+  .nav__logo img{ height:30px; }
+  .nav__logo span{ display:none; }
+  .collections__grid{ grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="announce">FLAMINGO ARC — LIMITED CAPSULE FOR THE LADIES</div>
+
+<header class="nav">
+  <button class="nav__burger" id="burgerBtn" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <nav class="nav__links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="#arrivals" class="active">Flamingo arc.<span class="tag">new</span></a>
+    <a href="#about">About</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+
+  <a href="index.html" class="nav__logo">
+    <img src="images/neezy_logo.png" alt="Neezy logo">
+    <span>FLAMINGO arc.</span>
+  </a>
+
+  <div class="nav__icons">
+    <button aria-label="Search">
+      <svg viewBox="0 0 24 24" width="18" height="18"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="21" y1="21" x2="15.5" y2="15.5" stroke="currentColor" stroke-width="2"/></svg>
+    </button>
+    <button aria-label="Cart">
+      <svg viewBox="0 0 24 24" width="18" height="18"><path d="M3 6h2l2.4 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 8H6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="22" r="1.4" fill="currentColor"/><circle cx="18" cy="22" r="1.4" fill="currentColor"/></svg>
+    </button>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <span class="hero__kicker">FOR THE LADIES</span>
+  <h1 class="hero__bg-text">Quiet Confidence</h1>
+  <div class="hero__img">
+    <img src="images/ladies_image_1.png" alt="FLAMINGO arc. hero piece">
+  </div>
+  <p class="hero__foot">The FLAMINGO arc. is Neezy's first capsule built for her — same small-batch cut, softened up without losing the edge.</p>
+  <div class="hero__cta">
+    <a href="#arrivals" class="btn">
+      Shop the arc.
+      <span class="btn__arrow">
+        <svg viewBox="0 0 24 24" width="12" height="12"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </a>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="about__label">
+    <p>About the arc.</p>
+    <p>What it's for</p>
+  </div>
+  <div>
+    <p class="about__statement">FLAMINGO arc. takes the same raw, local-cut pieces Neezy is known for and reworks the fit, fabric weight, and palette around the women who've been asking for their own drop.</p>
+    <div class="about__cta">
+      <a href="#arrivals" class="btn btn--pill">
+        Learn more
+        <span class="btn__arrow">
+          <svg viewBox="0 0 24 24" width="12" height="12"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="arrivals" id="arrivals">
+  <div class="arrivals__head">
+    <span>Small batch</span>
+    <h2>New Arrivals</h2>
+    <span>Ladies only</span>
+  </div>
+
+  <div class="arrivals__grid">
+
+    <article class="piece">
+      <div class="piece__img">
+        <span class="piece__badge">✦ ROSA</span>
+        <img src="images/ladies_handbag_1.jpg" alt="Rosa cropped hoodie">
+      </div>
+      <div class="piece__info">
+        <div>
+          <h3>Rosa Arc. Stiched Jeans Handbag</h3>
+          <p>MYR 259.00</p>
+        </div>
+        <a href="#" class="btn">Learn more</a>
+      </div>
+    </article>
+
+    <article class="piece">
+      <div class="piece__img">
+        <span class="piece__badge">✦ BELLA</span>
+        <img src="images/ladies_jeans_1.jpg" alt="Bella fitted jacket">
+      </div>
+      <div class="piece__info">
+        <div>
+          <h3>Bella Arc. Printed Baggy Jeans</h3>
+          <p>MYR 329.00</p>
+        </div>
+        <a href="#" class="btn">Learn more</a>
+      </div>
+    </article>
+
+    <article class="piece">
+      <div class="piece__img">
+        <span class="piece__badge">✦ MONIKA</span>
+        <img src="images/ladies_handbag_2.jpg" alt="Monika ribbed set">
+      </div>
+      <div class="piece__info">
+        <div>
+          <h3>Monika Arc. Venom Mutated Handbag (pink)</h3>
+          <p>MYR 229.00</p>
+        </div>
+        <a href="#" class="btn">Learn more</a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="passion">
+  <div class="passion__text">
+    <h2 style="font-size:clamp(28px,4vw,42px); margin-bottom:22px;">Made with the<br>same crew.</h2>
+    <p>
+      FLAMINGO arc. isn't a separate factory or a licensed spinoff — it's cut on the
+      same tables, by the same hands, in the same small runs. We just started
+      listening to a different set of fit notes.
+    </p>
+    <p>
+      Every piece still carries a number. Once a size sells through, it isn't
+      reordered — that's the whole point of keeping it small.
+    </p>
+    <div class="passion__cta">
+      <a href="#arrivals" class="btn btn--pill">
+        More about the arc.
+        <span class="btn__arrow">
+          <svg viewBox="0 0 24 24" width="12" height="12"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+    </div>
+  </div>
+  <div class="passion__collage">
+    <img class="c1" src="images/store_int_2.jpg" alt="Studio fitting, FLAMINGO arc.">
+    <img class="c2" src="images/photoshoot_1.jpg" alt="Fabric detail shot">
+    <img class="c3" src="images/flamingo_logo.jpg" alt="Close-up hardware detail">
+  </div>
+</section>
+
+<div class="wordmark">
+  <h2>FLAMINGO</h2>
+</div>
+
+<section class="collections">
+  <div class="collections__head">
+    <h2>Our Collections</h2>
+    <a href="#" class="btn btn--pill" id="viewAllBtn">
+      <span id="viewAllLabel">View all</span>
+      <span class="btn__arrow" id="viewAllArrow">
+        <svg viewBox="0 0 24 24" width="12" height="12"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </a>
+  </div>
+  <div class="collections__grid" id="collectionsGrid">
+    <figure class="collections__item">
+      <img src="images/rosa-collection-1.jpg" alt="Rosa collection, look 1">
+      <figcaption>Rosa</figcaption>
+    </figure>
+    <figure class="collections__item">
+      <img src="images/bella-collection-1.jpg" alt="Bella collection, look 1">
+      <figcaption>Bella</figcaption>
+    </figure>
+    <figure class="collections__item">
+      <img src="images/monika-collection-1.jpg" alt="Monika collection, look 1">
+      <figcaption>Monika</figcaption>
+    </figure>
+    <figure class="collections__item is-extra">
+      <img src="images/rosa-collection-2.jpg" alt="Rosa collection, look 2">
+      <figcaption>Rosa</figcaption>
+    </figure>
+    <figure class="collections__item is-extra">
+      <img src="images/bella-collection-2.jpg" alt="Bella collection, look 2">
+      <figcaption>Bella</figcaption>
+    </figure>
+    <figure class="collections__item is-extra">
+      <img src="images/monika-collection-2.jpg" alt="Monika collection, look 2">
+      <figcaption>Monika</figcaption>
+    </figure>
+    <figure class="collections__item is-extra">
+      <img src="images/rosa-collection-3.jpg" alt="Rosa collection, look 3">
+      <figcaption>Rosa</figcaption>
+    </figure>
+    <figure class="collections__item is-extra">
+      <img src="images/bella-collection-3.jpg" alt="Bella collection, look 3">
+      <figcaption>Bella</figcaption>
+    </figure>
+    <figure class="collections__item is-extra">
+      <img src="images/monika-collection-3.jpg" alt="Monika collection, look 3">
+      <figcaption>Monika</figcaption>
+    </figure>
+    <figure class="collections__item is-extra">
+      <span class="piece__badge">✦ NEW COLLECTION</span>
+      <img src="images/lucia_handbag_1.jpeg" alt="Rosa collection, look 4">
+      <figcaption>Lucia</figcaption>
+    </figure>
+    <figure class="collections__item is-extra">
+      <span class="piece__badge">✦ NEW COLLECTION</span>
+      <img src="images/lucia_hand_bra_1.jpeg" alt="Bella collection, look 4">
+      <figcaption>Lucia</figcaption>
+    </figure>
+    <figure class="collections__item is-extra">
+      <span class="piece__badge">✦ NEW COLLECTION</span>
+      <img src="images/lucia_ring_1.jpeg" alt="Monika collection, look 4">
+      <figcaption>Lucia</figcaption>
+    </figure>
+  </div>
+</section>
+
+<footer class="footer" id="contact">
+  <div class="footer__top">
+    <div>
+      <a href="index.html" class="footer__logo"><img src="images/logo.png" alt="Neezy logo"></a>
+      <p class="footer__blurb">FLAMINGO arc. — small-batch pieces for the ladies, cut by the same crew.</p>
+    </div>
+    <div class="footer__cols">
+      <div>
+        <h4>SHOP</h4>
+        <a href="#arrivals">New Arrivals</a>
+        <a href="index.html#shop">Main Catalog</a>
+      </div>
+      <div>
+        <h4>NEEZY</h4>
+        <a href="#about">About</a>
+        <a href="index.html">Home</a>
+      </div>
+      <div>
+        <h4>FOLLOW</h4>
+        <a href="#">Instagram</a>
+        <a href="#">TikTok</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <p>© <span id="year"></span> NEEZY. ALL RIGHTS RESERVED.</p>
+  </div>
+</footer>
+
+<script>
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.addEventListener('beforeunload', () => window.scrollTo(0, 0));
+window.addEventListener('load', () => window.scrollTo(0, 0));
+
+const burgerBtn = document.getElementById('burgerBtn');
+const navLinks = document.getElementById('navLinks');
+burgerBtn?.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks?.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => navLinks.classList.remove('open'));
+});
+
+const yearEl = document.getElementById('year');
+if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+// Expand/collapse the Our Collections grid
+const viewAllBtn = document.getElementById('viewAllBtn');
+const viewAllLabel = document.getElementById('viewAllLabel');
+const viewAllArrow = document.getElementById('viewAllArrow');
+const collectionsGrid = document.getElementById('collectionsGrid');
+
+viewAllBtn?.addEventListener('click', (e) => {
+  e.preventDefault();
+  const expanded = collectionsGrid.classList.toggle('is-expanded');
+  viewAllLabel.textContent = expanded ? 'Show less' : 'View all';
+  viewAllArrow.classList.toggle('rotated', expanded);
+  if (!expanded) {
+    collectionsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+});
+</script>
+</body>
+</html>
