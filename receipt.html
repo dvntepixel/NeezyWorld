@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Receipt — NEEZY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --ink:        #111110;
+  --bg:         #ece8de;
+  --paper:      #fbfaf6;
+  --dim:        #77746c;
+  --line:       #111110;
+  --accent:     #c8402c;
+
+  --font-display: 'Archivo Black', 'Arial Black', sans-serif;
+  --font-mono:    'Space Mono', monospace;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-mono);
+  font-size:13px;
+  line-height:1.6;
+  padding:50px 20px 80px;
+}
+h1,h2{ font-family:var(--font-display); text-transform:uppercase; line-height:1; }
+img{ display:block; max-width:100%; }
+
+.toolbar{
+  max-width:420px;
+  margin:0 auto 24px;
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+}
+.toolbar button{
+  font-family:var(--font-mono);
+  font-weight:700;
+  font-size:11px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  padding:10px 18px;
+  background:var(--ink);
+  color:var(--paper);
+  border:none;
+  cursor:pointer;
+}
+.toolbar button:hover{ background:var(--accent); }
+
+/* ============ Receipt ticket ============ */
+.receipt{
+  max-width:420px;
+  margin:0 auto;
+  background:var(--paper);
+  border:1.5px solid var(--line);
+  padding:34px 30px 26px;
+  position:relative;
+}
+.receipt::before, .receipt::after{
+  content:"";
+  position:absolute;
+  left:0; right:0;
+  height:14px;
+  background:
+    radial-gradient(circle at 10px 50%, var(--bg) 7px, transparent 7.5px) repeat-x;
+  background-size:20px 14px;
+}
+.receipt::before{ top:-7px; }
+.receipt::after{ bottom:-7px; transform:rotate(180deg); }
+
+.receipt__logo{ text-align:center; margin-bottom:6px; }
+.receipt__logo img{ height:34px; margin:0 auto; }
+.receipt__tag{
+  text-align:center;
+  font-size:10px;
+  letter-spacing:2px;
+  color:var(--dim);
+  text-transform:uppercase;
+  margin-bottom:22px;
+}
+
+.receipt__title{
+  text-align:center;
+  font-size:20px;
+  margin-bottom:4px;
+}
+.receipt__order{
+  text-align:center;
+  font-size:11px;
+  letter-spacing:1px;
+  color:var(--accent);
+  font-weight:700;
+  margin-bottom:22px;
+}
+
+.receipt__meta{
+  border-top:1px dashed var(--line);
+  border-bottom:1px dashed var(--line);
+  padding:16px 0;
+  margin-bottom:20px;
+}
+.receipt__meta-row{
+  display:flex;
+  justify-content:space-between;
+  font-size:11px;
+  padding:3px 0;
+}
+.receipt__meta-row span:first-child{ color:var(--dim); text-transform:uppercase; letter-spacing:.5px; }
+.receipt__meta-row span:last-child{ font-weight:700; text-align:right; max-width:65%; }
+
+.receipt__items{ margin-bottom:18px; }
+.receipt__item{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:9px 0;
+  border-bottom:1px dotted rgba(17,17,16,.25);
+}
+.receipt__item:last-child{ border-bottom:none; }
+.receipt__item-name{ font-weight:700; font-size:12px; }
+.receipt__item-meta{ font-size:10px; color:var(--dim); margin-top:2px; }
+.receipt__item-price{ font-size:12px; font-weight:700; white-space:nowrap; }
+
+.receipt__totals{
+  border-top:1.5px solid var(--line);
+  padding-top:14px;
+  margin-bottom:26px;
+}
+.receipt__total-row{
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  padding:4px 0;
+}
+.receipt__total-row.grand{
+  font-family:var(--font-display);
+  font-size:16px;
+  padding-top:10px;
+  margin-top:6px;
+  border-top:1px dashed var(--line);
+}
+
+.receipt__thanks{
+  text-align:center;
+  font-size:12px;
+  color:var(--dim);
+  margin-bottom:22px;
+  line-height:1.8;
+}
+.receipt__thanks strong{ color:var(--ink); }
+
+.receipt__barcode{ display:flex; flex-direction:column; align-items:center; gap:8px; }
+.receipt__bars{
+  width:180px; height:36px;
+  background:repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 4px, var(--ink) 4px 5px, transparent 5px 9px, var(--ink) 9px 12px, transparent 12px 14px, var(--ink) 14px 16px, transparent 16px 20px);
+}
+.receipt__barcode-id{ font-size:10px; letter-spacing:2px; color:var(--dim); }
+
+.empty{ max-width:420px; margin:0 auto; text-align:center; padding:80px 20px; }
+.empty h1{ font-size:26px; margin-bottom:12px; }
+.empty p{ color:var(--dim); }
+
+@media print{
+  body{ background:#fff; padding:0; }
+  .toolbar{ display:none; }
+  .receipt{ border:none; margin:0; max-width:none; }
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar" id="toolbar" style="display:none;">
+  <button type="button" id="printBtn">Print / Save as PDF</button>
+</div>
+
+<div id="root"></div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const encoded = params.get('data');
+const root = document.getElementById('root');
+const toolbar = document.getElementById('toolbar');
+
+function money(currency, amount) {
+  if (amount == null) return '\u2014';
+  if (currency === 'PHP') return '\u20b1' + Math.round(amount).toLocaleString();
+  if (currency === 'MYR') return 'RM ' + amount.toFixed(2);
+  return currency + ' ' + amount.toFixed(2);
+}
+
+function formatDateTime(iso) {
+  const d = new Date(iso);
+  const date = d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+  const time = d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+  return `${date} \u00b7 ${time}`;
+}
+
+function render() {
+  if (!encoded) {
+    root.innerHTML = `
+      <div class="empty">
+        <h1>No Receipt Found</h1>
+        <p>This page expects order data in the URL. Complete a checkout from the cart to generate a receipt.</p>
+      </div>
+    `;
+    return;
+  }
+
+  let receipt;
+  try {
+    receipt = JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(encoded)))));
+  } catch (e) {
+    root.innerHTML = `
+      <div class="empty">
+        <h1>Couldn't Read Receipt</h1>
+        <p>The order data in this link looks corrupted. Try checking out again.</p>
+      </div>
+    `;
+    return;
+  }
+
+  toolbar.style.display = 'flex';
+
+  const itemsHtml = receipt.items.map(item => `
+    <div class="receipt__item">
+      <div>
+        <div class="receipt__item-name">${item.name}</div>
+        <div class="receipt__item-meta">Qty ${item.qty}${item.size ? ' \u00b7 Size ' + item.size : ''}</div>
+      </div>
+      <div class="receipt__item-price">${money(item.currency, item.lineTotal)}</div>
+    </div>
+  `).join('');
+
+  const totalsHtml = Object.keys(receipt.subtotals).map(cur => `
+    <div class="receipt__total-row grand">
+      <span>Total (${cur})</span>
+      <span>${money(cur, receipt.subtotals[cur])}</span>
+    </div>
+  `).join('') || `<div class="receipt__total-row grand"><span>Total</span><span>\u2014</span></div>`;
+
+  root.innerHTML = `
+    <div class="receipt">
+      <div class="receipt__logo"><img src="images/neezy_logo.png" alt="Neezy logo"></div>
+      <p class="receipt__tag">Small Batch \u2014 No Reorders</p>
+
+      <h1 class="receipt__title">Receipt</h1>
+      <p class="receipt__order">Order #${receipt.orderId}</p>
+
+      <div class="receipt__meta">
+        <div class="receipt__meta-row"><span>Date</span><span>${formatDateTime(receipt.datetime)}</span></div>
+        <div class="receipt__meta-row"><span>Name</span><span>${receipt.customer.name}</span></div>
+        <div class="receipt__meta-row"><span>Email</span><span>${receipt.customer.email}</span></div>
+        <div class="receipt__meta-row"><span>Phone</span><span>${receipt.customer.phone}</span></div>
+        <div class="receipt__meta-row"><span>Address</span><span>${receipt.customer.address}</span></div>
+        <div class="receipt__meta-row"><span>Payment</span><span>${receipt.paymentMethod}</span></div>
+      </div>
+
+      <div class="receipt__items">${itemsHtml}</div>
+
+      <div class="receipt__totals">${totalsHtml}</div>
+
+      <p class="receipt__thanks">
+        <strong>Thank you for shopping Neezy.</strong><br>
+        Every piece is numbered and small-batch \u2014 once it's gone, it's gone.
+        Keep this receipt for your records.
+      </p>
+
+      <div class="receipt__barcode">
+        <div class="receipt__bars"></div>
+        <span class="receipt__barcode-id">${receipt.orderId}</span>
+      </div>
+    </div>
+  `;
+}
+
+render();
+document.getElementById('printBtn')?.addEventListener('click', () => window.print());
+</script>
+</body>
+</html>

@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Product — NEEZY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --ink:        #0a0a0a;
+  --panel:      #1a1815;
+  --paper:      #f2f0ec;
+  --dim:        #9a9a94;
+  --line:       rgba(242,240,236,.14);
+  --accent:     #c8402c;
+
+  --font-display: 'Archivo Black', 'Arial Black', sans-serif;
+  --font-mono:    'Space Mono', monospace;
+  --container: 1280px;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; }
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--font-mono);
+  font-size:14px;
+  line-height:1.6;
+}
+img{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+button{ font-family:inherit; cursor:pointer; background:none; border:none; color:inherit; }
+h1,h2,h3{ font-family:var(--font-display); text-transform:uppercase; line-height:1; }
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  font-family:var(--font-mono);
+  font-weight:700;
+  font-size:12px;
+  letter-spacing:1.5px;
+  padding:16px 30px;
+  text-transform:uppercase;
+  background:var(--paper);
+  color:var(--ink);
+  transition:background .2s ease, color .2s ease;
+}
+.btn:hover{ background:var(--accent); color:var(--paper); }
+.btn--outline{ background:transparent; color:var(--paper); border:1px solid var(--paper); }
+.btn--outline:hover{ background:var(--paper); color:var(--ink); }
+.btn--full{ width:100%; }
+.btn[disabled]{ opacity:.4; cursor:not-allowed; }
+.btn[disabled]:hover{ background:var(--paper); color:var(--ink); }
+
+/* ============ Nav ============ */
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:22px clamp(20px,4vw,56px);
+  border-bottom:1px solid var(--line);
+}
+.nav__logo img{ height:40px; }
+.nav__links{ display:flex; align-items:center; gap:26px; font-size:12px; letter-spacing:1px; text-transform:uppercase; }
+.nav__links a:hover{ color:var(--dim); }
+.nav__icons{ display:flex; align-items:center; gap:18px; }
+.nav__icons button, .nav__icons a{ display:flex; position:relative; }
+.cart-count{
+  position:absolute; top:-7px; right:-9px;
+  background:var(--accent); color:var(--paper);
+  font-size:9px; font-weight:700;
+  min-width:15px; height:15px; border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  padding:0 3px;
+}
+.nav__burger{ display:none; flex-direction:column; gap:5px; width:24px; }
+.nav__burger span{ height:2px; background:var(--paper); width:100%; }
+
+/* ============ Breadcrumb ============ */
+.crumb{
+  padding:18px clamp(20px,4vw,56px) 0;
+  font-size:11px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--dim);
+}
+.crumb a:hover{ color:var(--paper); }
+
+/* ============ Product layout ============ */
+.product{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:30px 24px 100px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+}
+
+/* Gallery */
+.gallery__main{
+  aspect-ratio:4/5;
+  overflow:hidden;
+  background:var(--panel);
+  border:1px solid var(--line);
+  margin-bottom:16px;
+  position:relative;
+}
+.gallery__main img{ width:100%; height:100%; object-fit:cover; }
+.gallery__badge{
+  position:absolute;
+  top:16px; left:16px;
+  background:var(--accent);
+  color:var(--paper);
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:1px;
+  padding:6px 12px;
+}
+.gallery__thumbs{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+.gallery__thumbs button{
+  aspect-ratio:4/5;
+  overflow:hidden;
+  background:var(--panel);
+  border:1px solid var(--line);
+  padding:0;
+}
+.gallery__thumbs button.active{ border-color:var(--paper); }
+.gallery__thumbs img{ width:100%; height:100%; object-fit:cover; }
+
+/* Info */
+.info__collection{
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:14px;
+}
+.info__collection a:hover{ text-decoration:underline; }
+.info h1{
+  font-size:clamp(28px,3.6vw,42px);
+  margin-bottom:14px;
+}
+.info__price{
+  display:flex;
+  align-items:baseline;
+  gap:12px;
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:26px;
+}
+.info__price .was{
+  font-size:14px;
+  font-weight:400;
+  color:var(--dim);
+  text-decoration:line-through;
+}
+.info__desc{
+  color:var(--dim);
+  font-size:14px;
+  line-height:1.9;
+  max-width:460px;
+  margin-bottom:34px;
+}
+
+.info__block{ margin-bottom:30px; }
+.info__label{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:11px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--dim);
+  margin-bottom:14px;
+}
+.info__label a{ color:var(--accent); }
+.info__label a:hover{ text-decoration:underline; }
+
+.sizes{ display:flex; gap:10px; flex-wrap:wrap; }
+.sizes button{
+  min-width:48px;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.5px;
+  transition:border-color .2s ease, background .2s ease;
+}
+.sizes button:hover{ border-color:var(--paper); }
+.sizes button.selected{ background:var(--paper); color:var(--ink); border-color:var(--paper); }
+.sizes button[disabled]{
+  opacity:.3;
+  text-decoration:line-through;
+  cursor:not-allowed;
+}
+
+.qty{
+  display:inline-flex;
+  align-items:center;
+  border:1px solid var(--line);
+}
+.qty button{ width:42px; height:42px; font-size:16px; }
+.qty button:hover{ background:var(--panel); }
+.qty span{ width:40px; text-align:center; font-weight:700; }
+
+.info__actions{
+  display:flex;
+  gap:14px;
+  margin-bottom:30px;
+  flex-wrap:wrap;
+}
+.info__actions .btn{ flex:1; min-width:200px; }
+
+.info__note{
+  font-size:12px;
+  color:var(--dim);
+  border-top:1px solid var(--line);
+  padding-top:20px;
+}
+
+.stock-flag{
+  display:inline-block;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--accent);
+  border:1px solid var(--accent);
+  padding:6px 12px;
+  margin-bottom:26px;
+}
+
+.toast{
+  position:fixed;
+  bottom:24px; left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--paper);
+  color:var(--ink);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.5px;
+  padding:14px 24px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .25s ease, transform .25s ease;
+  z-index:300;
+  max-width:90vw;
+  text-align:center;
+}
+.toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* ============ Related ============ */
+.related{ max-width:var(--container); margin:0 auto; padding:0 24px 100px; }
+.related__head{ font-size:clamp(22px,3vw,32px); margin-bottom:36px; }
+.related__grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:22px; }
+.related__card{ display:block; }
+.related__img{ aspect-ratio:4/5; overflow:hidden; background:var(--panel); border:1px solid var(--line); margin-bottom:12px; }
+.related__img img{ width:100%; height:100%; object-fit:cover; transition:transform .4s ease; }
+.related__card:hover .related__img img{ transform:scale(1.05); }
+.related__card h3{ font-family:var(--font-mono); font-size:12px; font-weight:700; text-transform:none; margin-bottom:4px; }
+.related__card p{ font-size:11px; color:var(--dim); }
+
+/* ============ Not found ============ */
+.notfound{
+  max-width:600px;
+  margin:0 auto;
+  padding:120px 24px;
+  text-align:center;
+}
+.notfound h1{ font-size:clamp(32px,5vw,54px); margin-bottom:18px; }
+.notfound p{ color:var(--dim); margin-bottom:30px; }
+
+/* ============ Footer ============ */
+.footer{ border-top:1px solid var(--line); padding:70px clamp(20px,4vw,50px) 30px; }
+.footer__top{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:50px; max-width:var(--container); margin:0 auto 50px; }
+.footer__logo img{ height:40px; opacity:.9; margin-bottom:16px; }
+.footer__blurb{ color:var(--dim); font-size:12px; max-width:260px; }
+.footer__cols{ display:flex; gap:60px; flex-wrap:wrap; }
+.footer__cols h4{ font-size:11px; letter-spacing:1.5px; color:var(--paper); margin-bottom:16px; }
+.footer__cols a{ display:block; font-size:12px; color:var(--dim); margin-bottom:10px; }
+.footer__cols a:hover{ color:var(--paper); }
+.footer__bottom{ text-align:center; font-size:10px; letter-spacing:1.5px; color:var(--dim); border-top:1px solid var(--line); padding-top:26px; }
+
+/* ============ Responsive ============ */
+@media (max-width:900px){
+  .product{ grid-template-columns:1fr; gap:34px; }
+  .related__grid{ grid-template-columns:1fr 1fr; }
+}
+@media (max-width:640px){
+  .nav__links{
+    position:fixed; top:0; right:0; height:100vh; width:min(78vw,300px);
+    background:var(--ink); flex-direction:column; padding:100px 30px; gap:26px;
+    transform:translateX(100%); transition:transform .3s ease; z-index:200;
+    border-left:1px solid var(--line);
+  }
+  .nav__links.open{ transform:translateX(0); }
+  .nav__burger{ display:flex; }
+  .nav__logo img{ height:30px; }
+  .info__actions .btn{ min-width:100%; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <button class="nav__burger" id="burgerBtn" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <a href="index.html" class="nav__logo">
+    <img src="images/neezy_logo.png" alt="Neezy logo">
+  </a>
+
+  <nav class="nav__links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="index.html#shop">Catalog</a>
+    <a href="core-collection.html">Core Collection</a>
+    <a href="about.html#contacts">Contact</a>
+  </nav>
+
+  <div class="nav__icons">
+    <a href="cart.html" aria-label="Cart">
+      <svg viewBox="0 0 24 24" width="18" height="18"><path d="M3 6h2l2.4 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 8H6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="22" r="1.4" fill="currentColor"/><circle cx="18" cy="22" r="1.4" fill="currentColor"/></svg>
+      <span class="cart-count">0</span>
+    </a>
+  </div>
+</header>
+
+<p class="crumb" id="crumb"></p>
+
+<!-- Populated by JS -->
+<main id="productRoot"></main>
+
+<footer class="footer">
+  <div class="footer__top">
+    <div>
+      <a href="index.html" class="footer__logo"><img src="images/neezy_logo.png" alt="Neezy logo"></a>
+      <p class="footer__blurb">Small-batch streetwear, cut and printed locally. Once it's gone, it's gone.</p>
+    </div>
+    <div class="footer__cols">
+      <div>
+        <h4>SHOP</h4>
+        <a href="index.html#shop">Catalog</a>
+        <a href="core-collection.html">Core Collection</a>
+        <a href="flamingo-archives.html">FLAMINGO arc.</a>
+      </div>
+      <div>
+        <h4>NEEZY</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html#contacts">Contact</a>
+      </div>
+      <div>
+        <h4>FOLLOW</h4>
+        <a href="#">Instagram</a>
+        <a href="#">TikTok</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <p>© <span id="year"></span> NEEZY. ALL RIGHTS RESERVED.</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast">Added to bag</div>
+
+<script>
+/* ============================================================
+   NEEZY — shared product catalog
+   Inlined on every page (same block, copy-pasted per page so each
+   HTML file stays fully self-contained with no external JS files).
+   Every product card across the site links to:
+     product.html?product=<slug>
+   using the keys below. Edit prices/images/copy here and it
+   updates everywhere (homepage, core-collection, flamingo-archives,
+   collaborations, product.html, cart.html) at once.
+   ============================================================ */
+
+window.NEEZY_PRODUCTS = {
+
+  /* ============ Homepage — This Week's Drop (index.html) ============ */
+  "nova-rugby-tee": {
+    name: "Nova Rugby Tee A23s",
+    collection: "Nova",
+    collectionHref: "core-collection.html#nova",
+    currency: "MYR",
+    price: 259.00,
+    wasPrice: 329.00,
+    badge: "On Sale",
+    desc: "Rugby-cut tee from the Nova line's Away 23s run. Heavier jersey knit, ribbed collar, small batch print.",
+    images: ["images/nova_image_1.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  },
+  "nova-misfit-windbreaker": {
+    name: "Nova Misfit Windbreaker (Pink)",
+    collection: "Nova",
+    collectionHref: "core-collection.html#nova",
+    currency: "MYR",
+    price: 159.00,
+    badge: "New",
+    desc: "Lightweight windbreaker in the Misfit colorway. Packable, water-resistant shell, Nova sleeve hit.",
+    images: ["images/nova_image_3.jpg"],
+    sizes: ["S", "M", "L"],
+    soldOut: []
+  },
+  "horizon-no-emotion-hoodie": {
+    name: "Horizon \u201cNo Emotion\u201d Hoodie",
+    collection: "Horizon",
+    collectionHref: "core-collection.html#horizon",
+    currency: "MYR",
+    price: 149.00,
+    wasPrice: 189.00,
+    badge: "Sale",
+    desc: "Mid-weight hoodie from the Horizon line, \u201cNo Emotion\u201d graphic front and center. Relaxed fit.",
+    images: ["images/horizon_image_2.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  },
+  "horizon-boss-hate-tee": {
+    name: "Horizon \u201cyour boss hate this design\u201d Tee",
+    collection: "Horizon",
+    collectionHref: "core-collection.html#horizon",
+    currency: "MYR",
+    price: 89.00,
+    badge: "New",
+    desc: "Loud graphic tee, straight off the Horizon summer run. Lightweight cotton, built for warm days.",
+    images: ["images/horizon_image_1.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  },
+  "aurelia-evolution-tee": {
+    name: "Aurelia Evolution of Man Tee (Gray)",
+    collection: "Aurelia",
+    collectionHref: "core-collection.html#aurelia",
+    currency: "MYR",
+    price: 69.00,
+    wasPrice: 119.00,
+    badge: "Sale",
+    desc: "Aurelia's darkest colorway tee, tonal graphic print. Heavier drape than a standard tee.",
+    images: ["images/aurelia_image_1.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: ["S"]
+  },
+  "aurelia-misfit-jorts": {
+    name: "Aurelia Misfit Jorts",
+    collection: "Aurelia",
+    collectionHref: "core-collection.html#aurelia",
+    currency: "MYR",
+    price: 179.00,
+    wasPrice: 229.00,
+    badge: "Sale",
+    desc: "Distressed denim shorts, Aurelia hardware on the back pocket. Numbered piece, no reorders.",
+    images: ["images/aurelia_image_2.jpg"],
+    sizes: ["S", "M", "L"],
+    soldOut: []
+  },
+
+  /* ============ Core Collection — Nova (core-collection.html) ============ */
+  "concrete-hoodie": {
+    name: "Concrete Hoodie",
+    collection: "Nova",
+    collectionHref: "core-collection.html#nova",
+    currency: "PHP",
+    price: 1980,
+    wasPrice: 2450,
+    badge: "Sale",
+    desc: "Heavyweight fleece cut with a boxy silhouette. Garment-dyed for a worn-in shade from day one, finished with the Nova chest hit.",
+    images: ["images/product-1.jpg", "images/product-5.jpg", "images/nova-3.jpg", "images/nova-4.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  },
+  "nova-tee": {
+    name: "Nova Tee",
+    collection: "Nova",
+    collectionHref: "core-collection.html#nova",
+    currency: "PHP",
+    price: 1150,
+    badge: "New",
+    desc: "Mid-weight cotton tee, garment-washed for a soft handfeel. Small Nova print on the left chest, nothing on the back.",
+    images: ["images/product-5.jpg", "images/product-1.jpg", "images/nova-3.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: ["S"]
+  },
+  "nova-windbreaker": {
+    name: "Nova Windbreaker",
+    collection: "Nova",
+    collectionHref: "core-collection.html#nova",
+    currency: "PHP",
+    price: 2450,
+    badge: "New",
+    desc: "Shell windbreaker built for the transition seasons. Packable hood, Nova back print.",
+    images: ["images/nova-3.jpg", "images/product-1.jpg"],
+    sizes: ["S", "M", "L"],
+    soldOut: []
+  },
+  "nova-cargo-shorts": {
+    name: "Nova Cargo Shorts",
+    collection: "Nova",
+    collectionHref: "core-collection.html#nova",
+    currency: "PHP",
+    price: 1650,
+    desc: "Utility cargo shorts, six pockets, ripstop twill. Nova leg tag at the hem.",
+    images: ["images/nova-4.jpg", "images/product-5.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  },
+
+  /* ============ Core Collection — Horizon ============ */
+  "blockwork-hoodie": {
+    name: "Blockwork Hoodie",
+    collection: "Horizon",
+    collectionHref: "core-collection.html#horizon",
+    currency: "PHP",
+    price: 1750,
+    wasPrice: 2200,
+    badge: "Sale",
+    desc: "Lighter-weight fleece built for warmer days. Dropped shoulder, relaxed body, Horizon tag stitched at the hem.",
+    images: ["images/product-2.jpg", "images/product-6.jpg", "images/horizon-3.jpg", "images/horizon-4.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: ["XL"]
+  },
+  "horizon-jacket": {
+    name: "Horizon Jacket",
+    collection: "Horizon",
+    collectionHref: "core-collection.html#horizon",
+    currency: "PHP",
+    price: 3200,
+    badge: "New",
+    desc: "Lightweight shell jacket for skate sessions and beach days. Packable hood, zip chest pocket, Horizon back print.",
+    images: ["images/product-6.jpg", "images/horizon-3.jpg", "images/horizon-4.jpg"],
+    sizes: ["S", "M", "L"],
+    soldOut: []
+  },
+  "horizon-tank": {
+    name: "Horizon Tank",
+    collection: "Horizon",
+    collectionHref: "core-collection.html#horizon",
+    currency: "PHP",
+    price: 950,
+    desc: "Ribbed tank for hot days under the sun. Lightweight, quick-dry, Horizon chest print.",
+    images: ["images/horizon-3.jpg", "images/product-2.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  },
+  "horizon-shorts": {
+    name: "Horizon Shorts",
+    collection: "Horizon",
+    collectionHref: "core-collection.html#horizon",
+    currency: "PHP",
+    price: 1400,
+    desc: "Board-short cut with an elastic waist. Built to move — skate, beach, or anything under the sun.",
+    images: ["images/horizon-4.jpg", "images/product-6.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  },
+
+  /* ============ Core Collection — Aurelia ============ */
+  "alleyway-hoodie": {
+    name: "Alleyway Hoodie",
+    collection: "Aurelia",
+    collectionHref: "core-collection.html#aurelia",
+    currency: "PHP",
+    price: 2150,
+    wasPrice: 2600,
+    badge: "Sale",
+    desc: "Heavyweight, low-key, and built to wear in. Aurelia's darkest colorway with tonal embroidery only.",
+    images: ["images/product-3.jpg", "images/product-4.jpg", "images/aurelia-3.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  },
+  "midnight-hoodie": {
+    name: "Midnight Hoodie",
+    collection: "Aurelia",
+    collectionHref: "core-collection.html#aurelia",
+    currency: "PHP",
+    price: 1900,
+    wasPrice: 2400,
+    badge: "Sale",
+    desc: "Elegance in streetwear \u2014 a heavier drape, longer body, made to layer under the Aurelia overcoat.",
+    images: ["images/product-4.jpg", "images/aurelia-4.jpg", "images/product-3.jpg"],
+    sizes: ["M", "L", "XL"],
+    soldOut: ["M"]
+  },
+  "aurelia-overcoat": {
+    name: "Aurelia Overcoat",
+    collection: "Aurelia",
+    collectionHref: "core-collection.html#aurelia",
+    currency: "PHP",
+    price: 4600,
+    badge: "New",
+    desc: "Full-length overcoat, Aurelia's most elevated piece. Anyone can wear it \u2014 live, love & die, Aurelia.",
+    images: ["images/aurelia-3.jpg", "images/product-3.jpg"],
+    sizes: ["S", "M", "L"],
+    soldOut: []
+  },
+  "aurelia-wide-pants": {
+    name: "Aurelia Wide Pants",
+    collection: "Aurelia",
+    collectionHref: "core-collection.html#aurelia",
+    currency: "PHP",
+    price: 2300,
+    desc: "Wide-leg trousers with a drapey, elevated cut. Pairs with the Overcoat or worn on its own.",
+    images: ["images/aurelia-4.jpg", "images/product-4.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  },
+
+  /* ============ FLAMINGO arc. — New Arrivals (flamingo-archives.html) ============ */
+  "rosa-handbag": {
+    name: "Rosa Arc. Stiched Jeans Handbag",
+    collection: "FLAMINGO arc.",
+    collectionHref: "flamingo-archives.html",
+    currency: "MYR",
+    price: 259.00,
+    badge: "\u2726 Rosa",
+    desc: "Denim-stitched handbag from the FLAMINGO arc. capsule. Same small-batch cut Neezy is known for, reworked for her.",
+    images: ["images/ladies_handbag_1.jpg", "images/rosa-collection-1.jpg", "images/rosa-collection-2.jpg"],
+    sizes: [],
+    soldOut: []
+  },
+  "bella-jeans": {
+    name: "Bella Arc. Printed Baggy Jeans",
+    collection: "FLAMINGO arc.",
+    collectionHref: "flamingo-archives.html",
+    currency: "MYR",
+    price: 329.00,
+    badge: "\u2726 Bella",
+    desc: "Baggy-fit printed denim from the FLAMINGO arc. capsule. Numbered piece, no reorders once a size sells through.",
+    images: ["images/ladies_jeans_1.jpg", "images/bella-collection-1.jpg", "images/bella-collection-2.jpg"],
+    sizes: ["S", "M", "L"],
+    soldOut: []
+  },
+  "monika-handbag": {
+    name: "Monika Arc. Venom Mutated Handbag (pink)",
+    collection: "FLAMINGO arc.",
+    collectionHref: "flamingo-archives.html",
+    currency: "MYR",
+    price: 229.00,
+    badge: "\u2726 Monika",
+    desc: "Sculptural handbag from the FLAMINGO arc. capsule, Monika's signature mutated silhouette in pink.",
+    images: ["images/ladies_handbag_2.jpg", "images/monika-collection-1.jpg", "images/monika-collection-2.jpg"],
+    sizes: [],
+    soldOut: []
+  },
+
+  /* ============ FLAMINGO arc. — Our Collections grid ============ */
+  "rosa-leopard-belt": {
+    name: "Rosa Leopard Belt",
+    collection: "FLAMINGO arc. \u2014 Rosa",
+    collectionHref: "flamingo-archives.html#arrivals",
+    currency: "MYR",
+    price: 89.00,
+    desc: "Leopard-print belt from the Rosa line. Adjustable, solid brass buckle.",
+    images: ["images/leopard_belt.jpg"],
+    sizes: ["S", "M", "L"],
+    soldOut: []
+  },
+  "bella-leather-jacket": {
+    name: "Bella Handmade Leather Jacket",
+    collection: "FLAMINGO arc. \u2014 Bella",
+    collectionHref: "flamingo-archives.html#arrivals",
+    currency: "MYR",
+    price: 599.00,
+    desc: "Handmade leather jacket from the Bella line. Fully lined, hand-cut panels, numbered piece.",
+    images: ["images/bella_jacket_1.jpg"],
+    sizes: ["S", "M", "L"],
+    soldOut: []
+  },
+  "monika-mother-mary-jeans": {
+    name: "Monika Mother Mary Printed Jeans",
+    collection: "FLAMINGO arc. \u2014 Monika",
+    collectionHref: "flamingo-archives.html#arrivals",
+    currency: "MYR",
+    price: 279.00,
+    desc: "Hand-printed denim from the Monika line, Mother Mary graphic down the leg.",
+    images: ["images/monika_jean_2.jpg"],
+    sizes: ["S", "M", "L"],
+    soldOut: []
+  },
+  "rosa-spider-jorts": {
+    name: "Rosa Spider-Jean Jorts",
+    collection: "FLAMINGO arc. \u2014 Rosa",
+    collectionHref: "flamingo-archives.html#arrivals",
+    currency: "MYR",
+    price: 149.00,
+    desc: "Distressed denim jorts from the Rosa line, spider-web print detailing.",
+    images: ["images/rosa_spider_jorts.jpg"],
+    sizes: ["S", "M", "L"],
+    soldOut: []
+  },
+  "bella-tuff-sweatpant": {
+    name: "Bella TUFF Sweatpant (Dark)",
+    collection: "FLAMINGO arc. \u2014 Bella",
+    collectionHref: "flamingo-archives.html#arrivals",
+    currency: "MYR",
+    price: 169.00,
+    desc: "Heavyweight sweatpant from the Bella line in a dark colorway. Tapered leg, ribbed cuff.",
+    images: ["images/bella_sweatpant_1.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  },
+  "monika-sakura-jeans": {
+    name: "Monika Sakura Printed Jeans",
+    collection: "FLAMINGO arc. \u2014 Monika",
+    collectionHref: "flamingo-archives.html#arrivals",
+    currency: "MYR",
+    price: 279.00,
+    desc: "Hand-printed denim from the Monika line, sakura branch print down the leg.",
+    images: ["images/monika_jean_1.jpg"],
+    sizes: ["S", "M", "L"],
+    soldOut: []
+  },
+  "rosa-beanie": {
+    name: "Rosa Soft Cotton Custom Beanie",
+    collection: "FLAMINGO arc. \u2014 Rosa",
+    collectionHref: "flamingo-archives.html#arrivals",
+    currency: "MYR",
+    price: 59.00,
+    desc: "Soft cotton beanie from the Rosa line, custom embroidered patch.",
+    images: ["images/rosa_beanie.jpg"],
+    sizes: [],
+    soldOut: []
+  },
+  "bella-asian-cut-jacket": {
+    name: "Bella Asian Cut Jacket Cotton",
+    collection: "FLAMINGO arc. \u2014 Bella",
+    collectionHref: "flamingo-archives.html#arrivals",
+    currency: "MYR",
+    price: 249.00,
+    desc: "Cotton jacket from the Bella line, cut with an Asian-inspired silhouette.",
+    images: ["images/bella_jacket_2.jpg"],
+    sizes: ["S", "M", "L"],
+    soldOut: []
+  },
+  "monika-star-bracelet": {
+    name: "Monika Star Bracelete",
+    collection: "FLAMINGO arc. \u2014 Monika",
+    collectionHref: "flamingo-archives.html#arrivals",
+    currency: "MYR",
+    price: 49.00,
+    desc: "Star-charm bracelet from the Monika line. Adjustable cord, brass hardware.",
+    images: ["images/monika_star_bra.jpg"],
+    sizes: [],
+    soldOut: []
+  },
+
+  /* ============ FLAMINGO arc. — Lucia teaser (coming soon) ============ */
+  "lucia-handbag": {
+    name: "Lucia \u2014 Handbag",
+    collection: "FLAMINGO arc. \u2014 Lucia",
+    collectionHref: "flamingo-archives.html#arrivals",
+    currency: "MYR",
+    price: null,
+    badge: "\u2726 New Collection",
+    comingSoon: true,
+    desc: "A first look at Lucia, the next FLAMINGO arc. line. Not available to order yet \u2014 check back soon.",
+    images: ["images/lucia_handbag_1.jpeg"],
+    sizes: [],
+    soldOut: []
+  },
+  "lucia-hand-bra": {
+    name: "Lucia \u2014 Hand Bra",
+    collection: "FLAMINGO arc. \u2014 Lucia",
+    collectionHref: "flamingo-archives.html#arrivals",
+    currency: "MYR",
+    price: null,
+    badge: "\u2726 New Collection",
+    comingSoon: true,
+    desc: "A first look at Lucia, the next FLAMINGO arc. line. Not available to order yet \u2014 check back soon.",
+    images: ["images/lucia_hand_bra_1.jpeg"],
+    sizes: [],
+    soldOut: []
+  },
+  "lucia-ring": {
+    name: "Lucia \u2014 Ring",
+    collection: "FLAMINGO arc. \u2014 Lucia",
+    collectionHref: "flamingo-archives.html#arrivals",
+    currency: "MYR",
+    price: null,
+    badge: "\u2726 New Collection",
+    comingSoon: true,
+    desc: "A first look at Lucia, the next FLAMINGO arc. line. Not available to order yet \u2014 check back soon.",
+    images: ["images/lucia_ring_1.jpeg"],
+    sizes: [],
+    soldOut: []
+  },
+
+  /* ============ Formula One X Neezy (collaborations.html) ============ */
+  "ferrari-racing-jacket": {
+    name: "Ferrari Racing Jacket",
+    collection: "Formula One X Neezy",
+    collectionHref: "collaborations.html#f1",
+    currency: "MYR",
+    price: 789.00,
+    desc: "Garage capsule jacket, \u201cJamie Jaminson\u201d edition. Carbon-textured panels, race-suit stitching.",
+    images: ["images/ferrari_1.jpg", "images/f1_product_1.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  },
+  "homme-racing-jacket": {
+    name: "Homme Racing Jacket",
+    collection: "Formula One X Neezy",
+    collectionHref: "collaborations.html#f1",
+    currency: "MYR",
+    price: 899.00,
+    desc: "Garage capsule jacket, \u201cCarlos Bordeega\u201d edition. Silver hardware, pit-wall silhouette.",
+    images: ["images/mercedes_1.jpg", "images/f1_product_2.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  },
+  "malboro-racing-jacket": {
+    name: "Malboro Racing Jacket",
+    collection: "Formula One X Neezy",
+    collectionHref: "collaborations.html#f1",
+    currency: "MYR",
+    price: 849.00,
+    desc: "Garage capsule jacket, \u201cMiyota Takamichi\u201d edition. This colorway sold out during the first run.",
+    images: ["images/alfa_1.jpg", "images/f1_product_3.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: ["S", "M", "L", "XL"]
+  },
+
+  /* ============ FIFA World Cup 2026 (collaborations.html) ============ */
+  "neezy-norway-home": {
+    name: "Neezy X 1980s inspired Norway National Team Home",
+    collection: "FIFA World Cup 2026",
+    collectionHref: "collaborations.html#fifa",
+    currency: "MYR",
+    price: 259.00,
+    desc: "Retro-inspired home kit, 1980s Norway colorway. Matchday capsule, terrace-ready cut.",
+    images: ["images/hazim_model_fifa_1.png"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  },
+  "neezy-iceland-away": {
+    name: "Neezy X 1980s inspired Iceland National Team Away",
+    collection: "FIFA World Cup 2026",
+    collectionHref: "collaborations.html#fifa",
+    currency: "MYR",
+    price: 259.00,
+    desc: "Retro-inspired away kit, 1980s Iceland colorway. Matchday capsule, terrace-ready cut.",
+    images: ["images/adib_model_fifa_1.png"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  },
+  "neezy-germany-3rd": {
+    name: "Neezy X 2010s Inspired Germany National Team 3rd Kit",
+    collection: "FIFA World Cup 2026",
+    collectionHref: "collaborations.html#fifa",
+    currency: "MYR",
+    price: 259.00,
+    desc: "Retro-inspired 3rd kit, 2010s Germany colorway. Matchday capsule, terrace-ready cut.",
+    images: ["images/ayob_model_fifa_1.png"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  }
+
+};
+
+</script>
+<script>
+/* ============================================================
+   NEEZY — shared cart engine
+   Inlined on every page, right after the product catalog block above,
+   so each HTML file stays fully self-contained with no external JS files.
+
+   Storage: sessionStorage — this means the cart is remembered
+   as you navigate between pages, but clears automatically when
+   the browser tab/window is closed (i.e. "until the session
+   stops"). Swap STORAGE below to localStorage if you ever want
+   it to persist across visits instead.
+   ============================================================ */
+
+(function () {
+  const STORAGE = window.sessionStorage;
+  const KEY = "neezy_cart_v1";
+
+  function readCart() {
+    try {
+      const raw = STORAGE.getItem(KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function writeCart(items) {
+    try {
+      STORAGE.setItem(KEY, JSON.stringify(items));
+    } catch (e) { /* storage full or unavailable — fail silently */ }
+    updateBadges();
+    document.dispatchEvent(new CustomEvent("neezy-cart-updated", { detail: { items } }));
+  }
+
+  function findIndex(items, slug, size) {
+    return items.findIndex(i => i.slug === slug && i.size === (size || null));
+  }
+
+  function add(slug, size, qty) {
+    qty = Math.max(1, qty || 1);
+    const items = readCart();
+    const idx = findIndex(items, slug, size || null);
+    if (idx > -1) {
+      items[idx].qty += qty;
+    } else {
+      items.push({ slug: slug, size: size || null, qty: qty });
+    }
+    writeCart(items);
+    return items;
+  }
+
+  function removeAt(index) {
+    const items = readCart();
+    items.splice(index, 1);
+    writeCart(items);
+    return items;
+  }
+
+  function setQtyAt(index, qty) {
+    const items = readCart();
+    if (!items[index]) return items;
+    items[index].qty = Math.max(1, qty || 1);
+    writeCart(items);
+    return items;
+  }
+
+  function clear() {
+    writeCart([]);
+  }
+
+  function getItems() {
+    return readCart();
+  }
+
+  function getCount() {
+    return readCart().reduce((sum, i) => sum + i.qty, 0);
+  }
+
+  // Sum totals grouped by currency, since this catalog mixes MYR and PHP.
+  function getSubtotals() {
+    const items = readCart();
+    const products = window.NEEZY_PRODUCTS || {};
+    const totals = {};
+    items.forEach(i => {
+      const p = products[i.slug];
+      if (!p || p.price == null) return;
+      totals[p.currency] = (totals[p.currency] || 0) + p.price * i.qty;
+    });
+    return totals;
+  }
+
+  function formatMoney(currency, amount) {
+    if (currency === "PHP") return "\u20b1" + Math.round(amount).toLocaleString();
+    if (currency === "MYR") return "RM " + amount.toFixed(2);
+    return currency + " " + amount.toFixed(2);
+  }
+
+  function updateBadges() {
+    const count = getCount();
+    document.querySelectorAll(".cart-count").forEach(el => {
+      el.textContent = count;
+      el.style.display = count > 0 ? "" : "none";
+    });
+  }
+
+  window.NeezyCart = {
+    add: add,
+    removeAt: removeAt,
+    setQtyAt: setQtyAt,
+    clear: clear,
+    getItems: getItems,
+    getCount: getCount,
+    getSubtotals: getSubtotals,
+    formatMoney: formatMoney,
+    updateBadges: updateBadges
+  };
+
+  document.addEventListener("DOMContentLoaded", updateBadges);
+  // In case this script runs after DOMContentLoaded already fired
+  if (document.readyState !== "loading") updateBadges();
+})();
+
+</script>
+<script>
+/* ============================================================
+   Reads ?product=<slug> from the URL and renders that item
+   from window.NEEZY_PRODUCTS (js/products.js).
+   Example: product.html?product=concrete-hoodie
+   ============================================================ */
+const PRODUCTS = window.NEEZY_PRODUCTS || {};
+const params = new URLSearchParams(window.location.search);
+const slug = params.get('product');
+const root = document.getElementById('productRoot');
+const crumb = document.getElementById('crumb');
+
+const fallbackSlug = Object.keys(PRODUCTS)[0];
+const activeSlug = (slug && PRODUCTS[slug]) ? slug : (slug ? null : fallbackSlug);
+const item = activeSlug ? PRODUCTS[activeSlug] : null;
+
+let selectedSize = null;
+let qty = 1;
+let activeImg = 0;
+
+function isSoldOutEverywhere(p) {
+  return p.sizes && p.sizes.length > 0 && p.sizes.every(s => p.soldOut.includes(s));
+}
+
+function render() {
+  if (!item) {
+    document.getElementById('pageTitle').textContent = 'Product not found — NEEZY';
+    crumb.innerHTML = `<a href="index.html">Home</a> / Not found`;
+    root.innerHTML = `
+      <div class="notfound">
+        <h1>Piece not found</h1>
+        <p>That link didn't match anything in the catalog. It may have sold out for good, or the link's outdated.</p>
+        <a href="index.html#shop" class="btn">Back to the catalog</a>
+      </div>
+    `;
+    return;
+  }
+
+  document.getElementById('pageTitle').textContent = `${item.name} — NEEZY`;
+  crumb.innerHTML = `<a href="index.html">Home</a> / <a href="${item.collectionHref}">${item.collection}</a> / ${item.name}`;
+
+  const thumbs = item.images.map((src, i) => `
+    <button class="${i === activeImg ? 'active' : ''}" data-idx="${i}" aria-label="View image ${i + 1}">
+      <img src="${src}" alt="${item.name}, view ${i + 1}">
+    </button>
+  `).join('');
+
+  const comingSoon = !!item.comingSoon;
+  const soldOutAll = !comingSoon && isSoldOutEverywhere(item);
+
+  const sizeButtons = item.sizes.map(s => {
+    const disabled = item.soldOut.includes(s);
+    return `<button data-size="${s}" ${disabled ? 'disabled' : ''} class="${selectedSize === s ? 'selected' : ''}">${s}</button>`;
+  }).join('');
+
+  let priceHtml;
+  if (comingSoon) {
+    priceHtml = `<span>Coming Soon</span>`;
+  } else if (soldOutAll) {
+    priceHtml = `<span>Sold Out</span>`;
+  } else {
+    priceHtml = `${item.wasPrice ? `<span class="was">${NeezyCart.formatMoney(item.currency, item.wasPrice)}</span>` : ''} ${NeezyCart.formatMoney(item.currency, item.price)}`;
+  }
+
+  let actionHtml;
+  if (comingSoon) {
+    actionHtml = `<button class="btn btn--full" disabled>Coming Soon</button>`;
+  } else if (soldOutAll) {
+    actionHtml = `<button class="btn btn--full" disabled>Sold Out</button>`;
+  } else {
+    actionHtml = `
+      <button class="btn btn--full" id="addToBag">Add to Bag</button>
+      <button class="btn btn--outline" id="wishlistBtn" aria-label="Add to wishlist">\u2661</button>
+    `;
+  }
+
+  root.innerHTML = `
+    <div class="product">
+      <div class="gallery">
+        <div class="gallery__main">
+          ${item.badge ? `<span class="gallery__badge">${item.badge}</span>` : ''}
+          <img id="mainImg" src="${item.images[activeImg]}" alt="${item.name}">
+        </div>
+        ${item.images.length > 1 ? `<div class="gallery__thumbs">${thumbs}</div>` : ''}
+      </div>
+
+      <div class="info">
+        <p class="info__collection"><a href="${item.collectionHref}">${item.collection}</a></p>
+        <h1>${item.name}</h1>
+        ${(comingSoon || soldOutAll) ? `<p class="stock-flag">${comingSoon ? 'Coming Soon' : 'Sold Out'}</p>` : ''}
+        <p class="info__price">${priceHtml}</p>
+        <p class="info__desc">${item.desc}</p>
+
+        ${(item.sizes.length && !comingSoon && !soldOutAll) ? `
+        <div class="info__block">
+          <div class="info__label"><span>Size</span><a href="#">Size guide</a></div>
+          <div class="sizes">${sizeButtons}</div>
+        </div>` : ''}
+
+        ${(!comingSoon && !soldOutAll) ? `
+        <div class="info__block">
+          <div class="info__label"><span>Quantity</span></div>
+          <div class="qty">
+            <button id="qtyMinus" aria-label="Decrease quantity">\u2013</button>
+            <span id="qtyValue">${qty}</span>
+            <button id="qtyPlus" aria-label="Increase quantity">+</button>
+          </div>
+        </div>` : ''}
+
+        <div class="info__actions">${actionHtml}</div>
+
+        <p class="info__note">${comingSoon ? "This piece hasn't dropped yet — check back soon." : 'Numbered piece — once this size sells through, it isn\'t reordered.'}</p>
+      </div>
+    </div>
+
+    <section class="related">
+      <h2 class="related__head">You may also like</h2>
+      <div class="related__grid" id="relatedGrid"></div>
+    </section>
+  `;
+
+  // Thumbnail switching
+  root.querySelectorAll('.gallery__thumbs button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeImg = parseInt(btn.dataset.idx, 10);
+      render();
+    });
+  });
+
+  // Size selection
+  root.querySelectorAll('.sizes button:not([disabled])').forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedSize = btn.dataset.size;
+      render();
+    });
+  });
+
+  // Quantity stepper
+  document.getElementById('qtyMinus')?.addEventListener('click', () => {
+    qty = Math.max(1, qty - 1);
+    document.getElementById('qtyValue').textContent = qty;
+  });
+  document.getElementById('qtyPlus')?.addEventListener('click', () => {
+    qty = qty + 1;
+    document.getElementById('qtyValue').textContent = qty;
+  });
+
+  // Add to bag — real add via the shared cart engine
+  document.getElementById('addToBag')?.addEventListener('click', () => {
+    if (item.sizes.length && !selectedSize) {
+      showToast('Pick a size first');
+      return;
+    }
+    NeezyCart.add(activeSlug, selectedSize, qty);
+    showToast(`Added ${item.name}${selectedSize ? ` (${selectedSize})` : ''} \u00d7 ${qty} to your bag`);
+  });
+
+  // Related products = everything else in the same collection, else random others
+  const related = Object.entries(PRODUCTS)
+    .filter(([key, p]) => key !== activeSlug && p.collection === item.collection)
+    .slice(0, 4);
+  const fill = Object.entries(PRODUCTS)
+    .filter(([key]) => key !== activeSlug && !related.find(r => r[0] === key))
+    .slice(0, 4 - related.length);
+  const finalRelated = [...related, ...fill].slice(0, 4);
+
+  document.getElementById('relatedGrid').innerHTML = finalRelated.map(([key, p]) => `
+    <a class="related__card" href="product.html?product=${key}">
+      <div class="related__img"><img src="${p.images[0]}" alt="${p.name}"></div>
+      <h3>${p.name}</h3>
+      <p>${p.price == null ? 'Coming soon' : NeezyCart.formatMoney(p.currency, p.price)}</p>
+    </a>
+  `).join('');
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+render();
+
+/* ============ Nav + misc ============ */
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.addEventListener('beforeunload', () => window.scrollTo(0, 0));
+
+const burgerBtn = document.getElementById('burgerBtn');
+const navLinks = document.getElementById('navLinks');
+burgerBtn?.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks?.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => navLinks.classList.remove('open'));
+});
+
+const yearEl = document.getElementById('year');
+if (yearEl) yearEl.textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
