@@ -391,6 +391,14 @@ h1,h2,h3{ font-family:var(--font-display); text-transform:uppercase; line-height
 .fifa-piece h3{ font-size:15px; margin-bottom:6px; }
 .fifa-piece p{ font-size:12px; color:rgba(255,255,255,.75); }
 
+/* ============ NeezyXFifa Originals ============ */
+.fifa__originals{ padding:80px clamp(20px,4vw,56px) 20px; position:relative; z-index:2; max-width:1100px; margin:0 auto; border-top:1px solid rgba(255,255,255,.18); }
+.fifa__originals-head{ text-align:center; margin-bottom:46px; }
+.fifa__originals-head p.fifa__story-label{ margin-bottom:14px; }
+.fifa__originals-head h2{ font-size:clamp(24px,3.4vw,36px); margin-bottom:12px; }
+.fifa__originals-head span{ color:rgba(255,255,255,.75); font-size:13px; max-width:480px; display:block; margin:0 auto; }
+.fifa__originals-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
+
 /* ============ FIFA Capsule Pack game ============ */
 .fifa__pack{
   max-width:1040px;
@@ -649,6 +657,7 @@ h1,h2,h3{ font-family:var(--font-display); text-transform:uppercase; line-height
   .f1__hero-img{ min-height:340px; order:-1; }
   .f1__grid{ height:380px; }
   .fifa__grid{ grid-template-columns:1fr 1fr; }
+  .fifa__originals-grid{ grid-template-columns:1fr 1fr; }
   .pack-layout{ grid-template-columns:1fr; gap:44px; }
 }
 @media (max-width:640px){
@@ -673,6 +682,7 @@ h1,h2,h3{ font-family:var(--font-display); text-transform:uppercase; line-height
   .f1-piece.is-collapsed .f1-piece__info{ opacity:1; }
 
   .fifa__grid{ grid-template-columns:1fr; }
+  .fifa__originals-grid{ grid-template-columns:1fr; }
 }
 
 /* ============ Search modal (site-wide product search) ============ */
@@ -912,6 +922,78 @@ h1,h2,h3{ font-family:var(--font-display); text-transform:uppercase; line-height
       </article>
       </a>
 
+    </div>
+
+    <div class="fifa__originals" id="fifa-originals">
+      <div class="fifa__originals-head">
+        <p class="fifa__story-label">AN ORIGINAL WORK FROM NEEZYXFIFA</p>
+        <h2>NeezyXFifa Originals</h2>
+        <span>Not a replica of anything \u2014 pieces built around terrace culture itself: chants, scarves, the tunnel walk. No national badge required.</span>
+      </div>
+
+      <div class="fifa__originals-grid">
+
+        <a href="product.html?product=ultras-bomber-jacket">
+        <article class="fifa-piece">
+          <div class="fifa-piece__img">
+            <img src="images/fifa_jacket_1.jpg" alt="Ultras Bomber Jacket">
+          </div>
+          <h3>Juventus</h3>
+          <p>MYR 329.00</p>
+        </article>
+        </a>
+
+        <a href="product.html?product=chant-tee">
+        <article class="fifa-piece">
+          <div class="fifa-piece__img">
+            <img src="images/fifa_jacket_2.jpg" alt="Chant Tee">
+          </div>
+          <h3>Real Madrid</h3>
+          <p>MYR 329.00</p>
+        </article>
+        </a>
+
+        <a href="product.html?product=ballboy-cargo-shorts">
+        <article class="fifa-piece">
+          <div class="fifa-piece__img">
+            <img src="images/fifa_jacket_4.jpg" alt="Ballboy Cargo Shorts">
+          </div>
+          <h3>Paris Saint Germain</h3>
+          <p>MYR 329.00</p>
+        </article>
+        </a>
+
+        <a href="product.html?product=terrace-track-jacket">
+        <article class="fifa-piece">
+          <div class="fifa-piece__img">
+            <img src="images/fifa_jacket_3.jpg" alt="Terrace Track Jacket">
+          </div>
+          <h3>Napoli</h3>
+          <p>MYR 329.00</p>
+        </article>
+        </a>
+
+        <a href="product.html?product=matchday-scarf">
+        <article class="fifa-piece">
+          <div class="fifa-piece__img">
+            <img src="images/fifa_jacket_5.jpg" alt="Matchday Scarf">
+          </div>
+          <h3>Arsenal</h3>
+          <p>MYR 329.00</p>
+        </article>
+        </a>
+
+        <a href="product.html?product=tunnel-walk-hoodie">
+        <article class="fifa-piece">
+          <div class="fifa-piece__img">
+            <img src="images/fifa_jacket_6.jpg" alt="Tunnel Walk Hoodie">
+          </div>
+          <h3>Liverpool</h3>
+          <p>MYR 329.00</p>
+        </article>
+        </a>
+
+      </div>
     </div>
 
     <div class="fifa__pack" id="fifaPack">
@@ -1502,12 +1584,81 @@ window.NEEZY_PRODUCTS = {
     images: ["images/ayob_model_fifa_1.png"],
     sizes: ["S", "M", "L", "XL"],
     soldOut: []
+  }  ,
+
+  /* ============ NeezyXFifa Originals — not licensed, not replica kits ============ */
+  "ultras-bomber-jacket": {
+    name: "Ultras Bomber Jacket",
+    collection: "NeezyXFifa Originals",
+    collectionHref: "collaborations.html#fifa-originals",
+    currency: "MYR",
+    price: 429.00,
+    badge: "New",
+    desc: "An original NeezyXFifa piece, not tied to any team or badge \u2014 built around terrace culture itself. Heavyweight bomber, satin finish, chenille patch detailing.",
+    images: ["images/neezyxfifa-1.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  },
+  "chant-tee": {
+    name: "Chant Tee",
+    collection: "NeezyXFifa Originals",
+    collectionHref: "collaborations.html#fifa-originals",
+    currency: "MYR",
+    price: 99.00,
+    desc: "Heavyweight cotton tee printed with an original terrace chant graphic. Part of the NeezyXFifa originals line \u2014 no license, no replica, just the culture.",
+    images: ["images/neezyxfifa-2.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  },
+  "ballboy-cargo-shorts": {
+    name: "Ballboy Cargo Shorts",
+    collection: "NeezyXFifa Originals",
+    collectionHref: "collaborations.html#fifa-originals",
+    currency: "MYR",
+    price: 169.00,
+    desc: "Utility cargo shorts inspired by matchday ballboy kits. Original NeezyXFifa design, six pockets, ripstop twill.",
+    images: ["images/neezyxfifa-3.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  },
+  "terrace-track-jacket": {
+    name: "Terrace Track Jacket",
+    collection: "NeezyXFifa Originals",
+    collectionHref: "collaborations.html#fifa-originals",
+    currency: "MYR",
+    price: 249.00,
+    badge: "New",
+    desc: "Zip track jacket built for standing on the terraces, not sitting in a box. Original NeezyXFifa colorway, no team badge.",
+    images: ["images/neezyxfifa-4.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
+  },
+  "matchday-scarf": {
+    name: "Matchday Scarf",
+    collection: "NeezyXFifa Originals",
+    collectionHref: "collaborations.html#fifa-originals",
+    currency: "MYR",
+    price: 79.00,
+    desc: "Knit scarf, original NeezyXFifa graphic \u2014 the accessory that started as merch and became a uniform.",
+    images: ["images/neezyxfifa-5.jpg"],
+    sizes: [],
+    soldOut: []
+  },
+  "tunnel-walk-hoodie": {
+    name: "Tunnel Walk Hoodie",
+    collection: "NeezyXFifa Originals",
+    collectionHref: "collaborations.html#fifa-originals",
+    currency: "MYR",
+    price: 219.00,
+    desc: "Heavyweight hoodie named for the walk out of the tunnel \u2014 built for pre-match nerves and post-match block parties alike.",
+    images: ["images/neezyxfifa-6.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    soldOut: []
   }
 
 };
 
-</script>
-<script>
+</script><script>
 /* ============================================================
    NEEZY — shared cart engine
    Inlined on every page, right after the product catalog block above,
@@ -1629,8 +1780,7 @@ window.NEEZY_PRODUCTS = {
   if (document.readyState !== "loading") updateBadges();
 })();
 
-</script>
-<script>
+</script><script>
 if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
 }
@@ -1638,9 +1788,7 @@ window.addEventListener('beforeunload', () => window.scrollTo(0, 0));
 
 /* ============================================================
    FIFA Capsule Pack \u2014 mini pack-opening game.
-   Cards are your own art at images/card-name-1.png ... card-name-11.png.
-   Names/positions below are placeholders \u2014 swap them for the real
-   crew names once you've got them, that's the "adjust later" part.
+   Cards are your own art at images/fut-cards/<Name>.png.
    Rarity is just a cosmetic roll on top of a random card pull, and
    collected cards persist for the session via sessionStorage (same
    pattern as the cart), so refreshing/navigating won't reset progress
